@@ -20,11 +20,15 @@ import static org.mockito.Mockito.when;
 
 class JwtServiceImplTest {
 
-    @Mock
-    JwtProperties jwtProperties;
+    private final JwtProperties jwtProperties = new JwtProperties();
 
-    @InjectMocks
-    JwtServiceImpl jwtService;
+    private final JwtService jwtService;
+
+    JwtServiceImplTest() {
+        jwtProperties.setExpiration(10000000);
+        jwtProperties.setSecret("50861a2a1b08cd5f578facf25f0ad207831cafd0800ca9c761c7bf9b8e5510e3");
+        jwtService = new JwtServiceImpl(jwtProperties);
+    }
 
     @Test
     void extractLogin() {
