@@ -5,6 +5,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@RepositoryRestResource(collectionResourceRel = "transaction_types", path = "/api/transaction_type")
+@RepositoryRestResource(collectionResourceRel = "transaction_types", path = "transaction_type")
 public interface TransactionTypeRepository extends JpaRepository<TransactionType, String> {
 }
