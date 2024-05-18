@@ -5,7 +5,7 @@ import com.factory.reportservice.messaging.data.ReportRequest;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class MessageDataFactoryImpl implements MessageDataFactory {
-    public static final String REPORT_REQUEST = ReportRequest.class.getName();
+    public static final String REPORT_REQUEST = ReportRequest.class.getSimpleName();
 
     @Override
     public Class<?> getDataFromMessageData(MessageData<JsonNode> messageData) throws ClassNotFoundException {
