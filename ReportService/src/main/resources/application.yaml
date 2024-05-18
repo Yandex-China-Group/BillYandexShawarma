@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    username: "${PG_USERNAME}"
+    password: "${PG_PASSWORD}"
+    url: "jdbc:postgresql://${PG_HOST}/${PG_DB}"
+  data:
+    redis:
+      host: localhost
+      port: 6379
