@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "bills")
 public class Bill {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne
     private User owner;

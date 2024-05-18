@@ -17,7 +17,7 @@ import java.util.Optional;
 @Table(name = "goals")
 public class UserGoal {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private long userId;
     private boolean active;
