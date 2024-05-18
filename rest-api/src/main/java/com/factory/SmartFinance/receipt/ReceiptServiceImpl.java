@@ -30,10 +30,15 @@ public class ReceiptServiceImpl implements ReceiptService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
         );
 
-
         ReceiptTransactionDataDTO transactionData = retrieverClient.retrieveData(receiptRequest);
         // Пытаемся найти счет в нашей базе данных, если не находим то предпологаем что оплатили наличными.
         Bill bill = billRepository.findById(transactionData.getBillId()).orElse(null);
+
+        if (bill != null) {
+            if (bill.getOwner().getId() != user.getId()) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            }
+        }
 
         return transactionRepository.save(
                 Transaction.builder()
@@ -41,7 +46,7 @@ public class ReceiptServiceImpl implements ReceiptService {
                         .createdAt(transactionData.getTime())
                         .bill(bill)
                         .paymentCategory(new PaymentCategory("Чек"))
-                        // TODO: Лучше использовать ENUM'ы
+                        // TODO: Лучше использовать ENUM'ы в качестве TransactionType
                         .transactionType(new TransactionType("Трата"))
                         .build()
         ).getId();
