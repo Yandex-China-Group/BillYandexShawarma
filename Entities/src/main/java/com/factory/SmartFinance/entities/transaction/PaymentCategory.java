@@ -1,4 +1,4 @@
-package com.factory.SmartFinance.transaction;
+package com.factory.SmartFinance.entities.transaction;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

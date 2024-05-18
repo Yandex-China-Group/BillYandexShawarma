@@ -1,4 +1,4 @@
-package com.factory.SmartFinance.bill;
+package com.factory.SmartFinance.entities.bill;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
