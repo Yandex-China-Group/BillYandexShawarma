@@ -41,31 +41,17 @@ public class ReportController {
             @RequestParam(required = false) LocalDateTime periodStart,
             @RequestParam(required = false) LocalDateTime periodEnd
     ) {
-        orderReport(ReportType.MoneyFlow, request, billId, periodStart, periodEnd);
+        long userId = jwtService.extractId(jwtService.token(request).orElseThrow());
+        if (periodStart == null || periodEnd == null) {
+            periodEnd = LocalDateTime.now();
+            periodStart = periodEnd.minusMonths(1);
+        }
+
+        reportService.orderMoneyFlowReport(userId, billId, periodStart, periodEnd);
     }
 
     @GetMapping("/moneyBalance")
     public void orderMoneyBalanceReport(
-            HttpServletRequest request,
-            @RequestParam(required = false) Long billId,
-            @RequestParam(required = false) LocalDateTime periodStart,
-            @RequestParam(required = false) LocalDateTime periodEnd
-    ) {
-        orderReport(ReportType.Balance, request, billId, periodStart, periodEnd);
-    }
-
-    @GetMapping("/expenses")
-    public void orderExpensesReport(
-            HttpServletRequest request,
-            @RequestParam(required = false) Long billId,
-            @RequestParam(required = false) LocalDateTime periodStart,
-            @RequestParam(required = false) LocalDateTime periodEnd
-    ) {
-        orderReport(ReportType.Expenses, request, billId, periodStart, periodEnd);
-    }
-
-    public void orderReport(
-            ReportType reportType,
             HttpServletRequest request,
             @RequestParam(required = false) Long billId,
             @RequestParam(required = false) LocalDateTime periodStart,
@@ -77,6 +63,22 @@ public class ReportController {
             periodStart = periodEnd.minusMonths(1);
         }
 
-        reportService.orderReport(reportType, userId, billId, periodStart, periodEnd);
+        reportService.orderMoneyBalanceReport(userId, billId, periodStart, periodEnd);
+    }
+
+    @GetMapping("/expenses")
+    public void orderExpensesReport(
+            HttpServletRequest request,
+            @RequestParam(required = false) Long billId,
+            @RequestParam(required = false) LocalDateTime periodStart,
+            @RequestParam(required = false) LocalDateTime periodEnd
+    ) {
+        long userId = jwtService.extractId(jwtService.token(request).orElseThrow());
+        if (periodStart == null || periodEnd == null) {
+            periodEnd = LocalDateTime.now();
+            periodStart = periodEnd.minusMonths(1);
+        }
+
+        reportService.orderExpensesReport(userId, billId, periodStart, periodEnd);
     }
 }
