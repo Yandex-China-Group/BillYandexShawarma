@@ -1,15 +1,16 @@
-version: '3.8'
+version: '3'
+
 services:
   postgres_db:
-    image: postgres:12.2-alpine
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-    ports:
-      - "5432:5432"
+    image: postgres
     restart: unless-stopped
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
     volumes:
-      - pg-data:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql/data
   app:
     image: smartfinance
     build: .
@@ -18,7 +19,8 @@ services:
     depends_on:
       - postgres_db
     environment:
-      - PG_USERNAME=admin
-      - PG_PASSWORD=admin
+      - PG_HOST=postgres_db
+      - PG_USERNAME=${PG_USER}
+      - PG_PASSWORD=${PG_PASSWORD}
 volumes:
-  pg-data:
+  pg_data:
