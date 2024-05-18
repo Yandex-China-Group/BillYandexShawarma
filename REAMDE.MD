@@ -3,4 +3,4 @@
 сваггер:
 http://localhost:8080/swagger-ui/index.html#/
 
-бла-бла-бла
+бла-бла-блаf
