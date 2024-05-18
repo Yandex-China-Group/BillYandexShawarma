@@ -2,11 +2,9 @@ package com.factory.SmartFinance.receipt;
 
 import com.factory.SmartFinance.jwt.JwtService;
 import com.factory.SmartFinance.receipt.dto.ReceiptDTO;
-import com.factory.SmartFinance.user.auth.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
