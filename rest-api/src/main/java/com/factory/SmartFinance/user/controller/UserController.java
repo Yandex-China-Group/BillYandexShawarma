@@ -1,0 +1,53 @@
+package com.factory.SmartFinance.user.controller;
+
+import com.factory.SmartFinance.jwt.JwtService;
+import com.factory.SmartFinance.user.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api")
+public class UserController {
+    private final JwtService jwtService;
+    private final UserService service;
+
+    @Operation(summary = "Регистрация нового аккаунта")
+    @PostMapping("/register")
+    public void register(@RequestBody RegisterRequest request) {
+        service.register(
+                request.getFirstName(),
+                request.getLastName(),
+                request.getSurname(),
+                request.getScreenName(),
+                request.getLogin(),
+                request.getPassword()
+        );
+    }
+
+    @Operation(summary = "Получение данных о текущем аккаунте")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping("/me")
+    public UserDto me(HttpServletRequest request) {
+        long userId = jwtService.extractId(jwtService.token(request).orElseThrow());
+        return UserDto.from(service.user(userId));
+    }
+
+    @Operation(summary = "Обновление своего аккаунта")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @PatchMapping("/update")
+    public UserDto update(HttpServletRequest request, @RequestBody UpdateRequest updateRequest) {
+        long userId = jwtService.extractId(jwtService.token(request).orElseThrow());
+        service.updateUser(
+                userId,
+                updateRequest.getFirstName(),
+                updateRequest.getLastName(),
+                updateRequest.getSurname(),
+                updateRequest.getScreenName()
+        );
+        return UserDto.from(service.user(userId));
+    }
+}
