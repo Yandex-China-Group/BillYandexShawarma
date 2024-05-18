@@ -13,7 +13,7 @@ services:
       - pg_data:/var/lib/postgresql/data
   app:
     image: smartfinance
-    build: .
+    build: rest-api
     ports:
       - '8080:8080'
     depends_on:
