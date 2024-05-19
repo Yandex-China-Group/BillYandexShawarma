@@ -1,4 +1,4 @@
-package com.factory.SmartFinance.transaction;
+package com.factory.SmartFinance.entities.transaction;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

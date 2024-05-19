@@ -1,6 +1,6 @@
-package com.factory.SmartFinance.bill;
+package com.factory.SmartFinance.entities.bill;
 
-import com.factory.SmartFinance.user.User;
+import com.factory.SmartFinance.entities.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
