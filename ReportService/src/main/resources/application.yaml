@@ -1,8 +1,8 @@
 spring:
   datasource:
-    username: "${PG_USERNAME:admin}"
-    password: "${PG_PASSWORD:admin}"
-    url: "jdbc:postgresql://${PG_HOST:localhost:5432}/${PG_DB:postgres}"
+    username: "${PG_USERNAME}"
+    password: "${PG_PASSWORD}"
+    url: "jdbc:postgresql://${PG_HOST}/${PG_DB}"
 messaging:
   queue:
     name: "reports"
