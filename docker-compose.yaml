@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+  postgres_db:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  app-rest:
+    image: smartfinance
+    build: rest-api
+    ports:
+      - '8080:8080'
+    depends_on:
+      - report-service
+    environment:
+      - POSTGRES_HOST=postgres_db
+      - POSTGRES_USER=${POSTGRES_PASSWORD}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+  report-service:
+    image: smartfinance-report-service
+    build: ./ReportService/
+    environment:
+      - PG_USERNAME=${POSTGRES_PASSWORD}
+      - PG_PASSWORD=${POSTGRES_PASSWORD}
+      - PG_HOST=postgres_db:5432
+      - PG_DB=postgres
+    depends_on:
+      - postgres_db
+      - message-rabbitmq
+
+  grafana:
+    build: './config/grafana'
+    ports:
+      - '3000:3000'
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+        - grafana-storage:/var/lib/grafana
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-storage:/prometheus
+
+  message-rabbitmq:
+    image: rabbitmq:3.9
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+volumes:
+  pg_data:
+  grafana-storage:
+  prometheus-storage:

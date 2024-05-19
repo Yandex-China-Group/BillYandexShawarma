@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    username: "${PG_USERNAME}"
+    password: "${PG_PASSWORD}"
+    url: "jdbc:postgresql://${PG_HOST}/${PG_DB}"
+messaging:
+  queue:
+    name: "reports"
+  topic:
+    name: "finance"
+  routing:
+    key: "rnd.key.#"
