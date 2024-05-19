@@ -3,10 +3,10 @@ spring:
     username: "${PG_USERNAME}"
     password: "${PG_PASSWORD}"
     url: "jdbc:postgresql://${PG_HOST}/${PG_DB}"
-  data:
-    redis:
-      host: localhost
-      port: 6379
-redis:
-  listener:
-    main: "finance"
+messaging:
+  queue:
+    name: "reports"
+  topic:
+    name: "finance"
+  routing:
+    key: "rnd.key.#"
