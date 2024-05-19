@@ -1,6 +1,6 @@
 package com.factory.SmartFinance.user;
 
-import com.factory.SmartFinance.entities.transaction.PaymentCategory;
+import com.factory.SmartFinance.transaction.PaymentCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
