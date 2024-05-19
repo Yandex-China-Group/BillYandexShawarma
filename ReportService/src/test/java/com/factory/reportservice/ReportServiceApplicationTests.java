@@ -25,11 +25,15 @@ class ReportServiceApplicationTests {
 		Document document = new Document();
 		Set<BillView> bills = new HashSet<>(3);
 		Set<TransactionView> transactionsRubl = new HashSet<>();
-		for (long i = 0; i < 10; i++) {
+		for (long i = 0; i < 100; i++) {
 			transactionsRubl.add(new TransactionView(i, new Date(100), "Развлечения", "Покупка"));
 		}
+		Set<TransactionView> transactionsBucks = new HashSet<>();
+		for (long i = 0; i < 100; i++) {
+			transactionsBucks.add(new TransactionView(i, new Date(100), "Развлечения", "Покупка"));
+		}
 		bills.add(new BillView("Рублевый счет", "Счет на котором лежат рубли", transactionsRubl));
-		BillView billView = new BillView("titl", "nt", Set.of(new TransactionView(1, new Date(), "Развлечения", "Оплата")));
+		bills.add(new BillView("Долларовый счет", "Счет на котором лежат баксы", transactionsBucks));
 		UserView userView = new UserView("brodep","Denis", "Vasilev", bills);
 		PDFGeneration pdfGeneration = new TransactionGeneratorImpl(document, userView);
 		pdfGeneration.generateDoc();
